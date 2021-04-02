@@ -1,0 +1,9 @@
+.menuLateral{
+  background: #f8f8f8;
+}
+
+:host ::ng-deep{
+  .p-sidebar{
+    padding: 0%;
+  }
+}

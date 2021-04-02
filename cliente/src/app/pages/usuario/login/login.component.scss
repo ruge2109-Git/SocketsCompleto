@@ -1,0 +1,10 @@
+.contenedor{
+  height: calc(100% - 20%);
+}
+
+:host ::ng-deep{
+  .p-card{
+    width: 80%;
+    margin: auto;
+  }
+}
