@@ -1,0 +1,81 @@
+<app-appbar></app-appbar>
+
+<div class="contenedor">
+  <p-card>
+    <p-toolbar styleClass="p-mb-4">
+      <ng-template pTemplate="left">
+        <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success p-mr-2" routerLink="/usuarios/formulario/0"></button>
+        <button pButton pRipple label="Eliminar" icon="pi pi-trash" class="p-button-danger" (click)="eliminarUsuariosSeleccionados()" [disabled]="!usuariosSeleccionados || !usuariosSeleccionados.length"></button>
+      </ng-template>
+
+      <ng-template pTemplate="right">
+        <div class="p-d-flex">
+          <button type="button" pButton pRipple icon="pi pi-file-o" (click)="dt.exportCSV()" class="p-mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+          <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success p-mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
+          <button type="button" pButton pRipple icon="pi pi-filter" (click)="dt.exportCSV({selectionOnly:true})" class="p-button-info p-ml-auto" pTooltip="Solo seleccionados" tooltipPosition="bottom"></button>
+        </div>
+      </ng-template>
+    </p-toolbar>
+
+    <p-table #dt [value]="listUsuario" [columns]="columnas"[rows]="5" [paginator]="true" [globalFilterFields]="['nombres','email','telefono','nomUsuario']" [(selection)]="usuariosSeleccionados" [rowHover]="true" dataKey="codUsuario" currentPageReportTemplate="Mostando {first} de {last} de {totalRecords} registros"
+      [showCurrentPageReport]="true">
+
+      <ng-template pTemplate="caption">
+        <div class="p-d-flex p-ai-center p-jc-between">
+          <h2 class="p-m-0">Lista de usuarios</h2>
+          <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Buscar..." />
+          </span>
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 3rem">
+            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+          </th>
+          <th pSortableColumn="name">Nombres
+            <p-sortIcon field="name"></p-sortIcon>
+          </th>
+          <th pSortableColumn="price">Email
+            <p-sortIcon field="price"></p-sortIcon>
+          </th>
+          <th pSortableColumn="category">Teléfono
+            <p-sortIcon field="category"></p-sortIcon>
+          </th>
+          <th pSortableColumn="rating">Nombre de usuario
+            <p-sortIcon field="rating"></p-sortIcon>
+          </th>
+          <th></th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-usuario>
+        <tr>
+          <td>
+            <p-tableCheckbox [value]="usuario"></p-tableCheckbox>
+          </td>
+          <td>{{usuario.nombres}}</td>
+          <td>{{usuario.email}}</td>
+          <td>{{usuario.telefono}}</td>
+          <td>{{usuario.nomUsuario}}</td>
+          <td>
+            <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" [routerLink]="'/usuarios/formulario/'+usuario.codUsuario"></button>
+            <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="eliminarUsuario(usuario)"></button>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="summary">
+        <div class="p-d-flex p-ai-center p-jc-between">
+          Un total de {{listUsuario ? listUsuario.length : 0 }} usuarios.
+        </div>
+      </ng-template>
+
+    </p-table>
+
+  </p-card>
+</div>
+
+<app-footer></app-footer>

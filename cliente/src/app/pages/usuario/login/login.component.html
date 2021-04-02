@@ -1,0 +1,24 @@
+<p-toast position="top-center" key="tc"></p-toast>
+<app-spinner *ngIf="spinner"></app-spinner>
+<app-appbar></app-appbar>
+<div class="demo-container p-p-4">
+  <p-card header="Iniciar sesión">
+    <form [formGroup]="frmDatos" (ngSubmit)="iniciarSesion()">
+      <div class="p-fluid">
+        <div class="p-field">
+          <label for="usuario">Usuario</label>
+          <input id="usuario" formControlName="usuario" type="text" pInputText placeholder="Usuario" [class.ng-dirty]="condicionInvalid('usuario')" autocomplete="none">
+          <small class="p-error" *ngIf="condicionInvalid('usuario')">Los nombres son obligatorios.</small>
+        </div>
+        <div class="p-field">
+          <label for="pass">Contraseña</label>
+          <p-password [toggleMask]="true" formControlName="clave" [feedback]="false" placeholder="Clave" [class.ng-dirty]="condicionInvalid('clave')"></p-password>
+          <small class="p-error" *ngIf="condicionInvalid('clave')">Los nombres son obligatorios.</small>
+        </div>
+        <button pButton type="submit" label="Iniciar sesión" [disabled]="frmDatos.invalid"></button>
+      </div>
+    </form>
+  </p-card>
+</div>
+
+<app-footer></app-footer>

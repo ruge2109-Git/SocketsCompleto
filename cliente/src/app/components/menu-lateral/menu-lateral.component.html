@@ -1,0 +1,5 @@
+<p-sidebar [(visible)]="display">
+  <h3 class="p-text-center">Menu de opciones</h3>
+  <p-panelMenu [model]="items"></p-panelMenu>
+</p-sidebar>
+<button (click)="display=true" pButton pRipple type="button" icon="pi pi-list" class="p-button-rounded"></button>
