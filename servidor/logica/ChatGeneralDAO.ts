@@ -9,9 +9,11 @@ export class ChatGeneralDAO{
             const mensajeNuevo: ChatGeneral = await chatGeneralBD.create({
                 nomUsuario:mensaje.nomUsuario,
                 mensaje: mensaje.mensaje,
+                fechaMensaje:mensaje.fechaMensaje,
+                nombres:mensaje.nombres
             });
             await mensajeNuevo.save();
-            return mensaje;
+            return mensajeNuevo;
         } 
         catch (error) {
             console.log(error);

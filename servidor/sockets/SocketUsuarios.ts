@@ -1,9 +1,7 @@
-import { ChatGeneralDAO } from "../logica/ChatGeneralDAO";
 import { UsuarioDAO } from "../logica/UsuarioDAO";
 import { UsuarioDTO } from "../modelo/Usuario";
 
-export const usuarioDAO = new UsuarioDAO();
-export const chatGeneralDAO = new ChatGeneralDAO();
+export const usuarioDAO = UsuarioDAO.obtenerInstancia;
 
 
 export const conectarUsuario = (cliente: any, io: any) => {
@@ -61,12 +59,3 @@ export const iniciarSesion =  (cliente:any,io:any)=>{
     })
 }
 
-export const enviarMensaje = (cliente: any, io: any) => {
-    cliente.on("mensaje", (payload: any) => {
-        if (payload.general) {
-            let chatGeneral = {nomUsuario:payload.nomUsuario,mensaje:payload.mensaje};
-            chatGeneralDAO.agregarMensaje(chatGeneral);
-        }
-        io.emit('mensaje-nuevo', payload);
-    })
-}

@@ -17,7 +17,7 @@
       </ng-template>
     </p-toolbar>
 
-    <p-table #dt [value]="listUsuario" [columns]="columnas"[rows]="5" [paginator]="true" [globalFilterFields]="['nombres','email','telefono','nomUsuario']" [(selection)]="usuariosSeleccionados" [rowHover]="true" dataKey="codUsuario" currentPageReportTemplate="Mostando {first} de {last} de {totalRecords} registros"
+    <p-table #dt [value]="listUsuario" [columns]="columnas"[rows]="5" [paginator]="true" [globalFilterFields]="['nombres','email','telefono','nomUsuario']" [(selection)]="usuariosSeleccionados" [rowHover]="true" dataKey="nomUsuario" currentPageReportTemplate="Mostando {first} de {last} de {totalRecords} registros"
       [showCurrentPageReport]="true">
 
       <ng-template pTemplate="caption">

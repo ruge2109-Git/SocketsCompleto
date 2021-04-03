@@ -2,6 +2,7 @@ import { UsuarioDTO, usuarioBD, UsuarioDTOBD } from "../modelo/Usuario";
 
 export class UsuarioDAO {
 
+    private static _instance:UsuarioDAO;
     private listaActivos: UsuarioDTO[] = [];
 
     constructor() {
@@ -24,6 +25,10 @@ export class UsuarioDAO {
             console.log(error);
             return "NADA";    
         }
+    }
+
+    public static get obtenerInstancia() {
+        return this._instance || (this._instance = new this());
     }
 
     conectarUsuario(usuarioNuevo:UsuarioDTO){
@@ -87,10 +92,21 @@ export class UsuarioDAO {
     obtenerUsuariosActivos() {
         return this.listaActivos.filter(usuario=>{
             return usuario.nomUsuario!='' && usuario.nomUsuario!=null;
-        });        
-        // console.log(this.listaActivos);
+        });
+    }
+
+    obtenerUsuarioActivoPorNomUsuario(nomUsuario:string):UsuarioDTO{
+        let usuarioR:UsuarioDTO = new UsuarioDTO("0");
+        console.log(this.obtenerUsuariosActivos());
+        console.log(nomUsuario);
         
-        // return this.listaActivos; 
+        
+        this.listaActivos.forEach(usuario=>{
+            if (usuario.nomUsuario === nomUsuario) {
+                usuarioR = usuario;
+            }
+        });
+        return usuarioR;
     }
 
 }
