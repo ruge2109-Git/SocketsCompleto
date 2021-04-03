@@ -1,10 +1,19 @@
-.toolbar{
+.toolbar {
   width: 100%;
   background-color: #000000;
+  height: 80px;
 }
-.titulo{
+
+.titulo {
   color: #ffffff;
   margin: 0%;
   padding: 1%;
+}
+
+@media screen and (max-width:800px) {
+  .titulo {
+    text-align: center;
+    padding-top: 6%;
+  }
 }
 

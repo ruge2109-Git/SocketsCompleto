@@ -1,0 +1,30 @@
+.listaUsuarios{
+  list-style: none;
+  padding: 0%;
+  margin: 0%;
+}
+
+// .itemLista{
+//   text-align: center;
+// }
+
+.mensajeLocal{
+  text-align: right;
+  color: blue;
+}
+
+:host ::ng-deep {
+  .card {
+    height: 400px;
+    overflow-y: scroll;
+    padding: 22px;
+  }
+
+  .btnSubmit {
+    width: 100%;
+  }
+
+  .input{
+    width: 100%;
+  }
+}

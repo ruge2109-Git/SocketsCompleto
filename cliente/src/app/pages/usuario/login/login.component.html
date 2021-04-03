@@ -1,7 +1,7 @@
 <p-toast position="top-center" key="tc"></p-toast>
 <app-spinner *ngIf="spinner"></app-spinner>
 <app-appbar></app-appbar>
-<div class="demo-container p-p-4">
+<div class="contenedor p-p-4">
   <p-card header="Iniciar sesión">
     <form [formGroup]="frmDatos" (ngSubmit)="iniciarSesion()">
       <div class="p-fluid">
@@ -21,4 +21,4 @@
   </p-card>
 </div>
 
-<app-footer></app-footer>
+<app-footer class="footer-b"></app-footer>

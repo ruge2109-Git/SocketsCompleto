@@ -1,15 +1,15 @@
 import { WebSocketService } from './web-socket.service';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsuariosService {
 
-  constructor(private wsSocket:WebSocketService) { }
+  constructor(public wsSocket:WebSocketService,private router:Router) { }
 
   iniciarSesion(nomUsuario:string,clave:string){
-    this.wsSocket.checkStatus();
     let payload = {
       nomUsuario,clave
     };
@@ -19,4 +19,24 @@ export class UsuariosService {
       })
     });
   }
+
+  obtenerUsuarioActivos(){
+    return this.wsSocket.escuchar("usuarios-activos");
+  }
+
+  usuarioActivosPrimeraVez(){
+    return this.wsSocket.emitir("obtener-usuarios-activos")
+  }
+
+
+  cerrarSesion(){
+    localStorage.clear();
+    let payload = {
+      nombres:''
+    }
+    this.wsSocket.emitir("actualizar-usuario-socket",payload, ()=>{});
+    this.router.navigateByUrl("/");
+  }
+
+
 }

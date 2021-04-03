@@ -3,6 +3,7 @@ import SocketIO from "socket.io";
 import http from 'http';
 import { SERVER_PORT } from "../environments/environment";
 import * as socketUsuarios from '../sockets/SocketUsuarios';
+import * as socketChatGeneral from '../sockets/SocketChatGeneral';
 
 export default class Server {
 
@@ -32,12 +33,16 @@ export default class Server {
 
     private escucharSockets() {
         this.io.on('connection', cliente => {
+            //Sockets para los usuarios
             socketUsuarios.conectarUsuario(cliente, this.io);
             socketUsuarios.iniciarSesion(cliente,this.io);
-            // socketUsuarios.configurarUsuario(cliente,this.io); 
-            // socketUsuarios.desconectarPrueba(cliente,this.io);
-            // socketUsuarios.enviarMensaje(cliente,this.io);
-            // socketUsuarios.obtenerUsuariosActivos(cliente,this.io);
+            socketUsuarios.desconectarUsuario(cliente,this.io);
+            socketUsuarios.actualizarUsuario(cliente,this.io); 
+            socketUsuarios.enviarMensaje(cliente,this.io);
+            socketUsuarios.obtenerUsuariosActivos(cliente,this.io);
+
+            //Sockets para el chat general
+            socketChatGeneral.obtenerMensajesGenerales(cliente,this.io);
         });
     }
 

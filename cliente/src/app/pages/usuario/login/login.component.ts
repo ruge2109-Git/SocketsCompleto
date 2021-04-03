@@ -21,6 +21,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.frmDatos = this.newFormGroup();
+    localStorage.clear();
+    this.usuarioSerice.cerrarSesion();
   }
 
   ngOnDestroy(): void {
@@ -34,6 +36,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.usuarioSerice.iniciarSesion(usuario,clave).then((data:RespuestaSocket)=>{
       this.spinner = false;
       if (data.flag) {
+        localStorage.setItem("sesionUsuario",btoa(JSON.stringify(data.listUsuario)));
+        this.usuarioSerice.wsSocket.actualizarUsuario();
         this.router.navigateByUrl('/usuarios/chat');
       }
       else{

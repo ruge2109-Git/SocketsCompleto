@@ -1,9 +1,9 @@
 export class UsuarioDTO {
-  idSocket?: string;
-  codUsuario: number;
+  idSocket?:string;
+  _id?: string;
   nombres:string;
   nomUsuario: string;
-  contrasenia:string;
+  clave:string;
   email: string;
   telefono: string;
   seleccionado?:boolean = false;

@@ -6,4 +6,11 @@
   .p-sidebar{
     padding: 0%;
   }
+
+  @media screen and (max-width: 800px) {
+    button.p-button-rounded.p-ripple.p-button.p-component.p-button-icon-only  {
+      margin-top: -15px;
+      margin-left: 26px;
+    }
+  }
 }
