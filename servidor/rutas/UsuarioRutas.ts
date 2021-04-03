@@ -6,7 +6,7 @@ const usuarioDAO = new UsuarioDAO();
 
 usuarioRutas.get('/usuario', async (req: Request, res: Response) => {
     try{
-        let usuarios = await usuarioDAO.obtenerTodosLosUsuarios();
+        let usuarios = await usuarioDAO.obtenerUsuariosActivos();
         
         res.json({
             flag: true,
@@ -23,43 +23,7 @@ usuarioRutas.get('/usuario', async (req: Request, res: Response) => {
     }
 });
 
-usuarioRutas.post('/usuario/login', async (req: Request, res: Response) => {
 
-    try{
-        const nomUsuario = req.body.nomUsuario;
-        const clave = req.body.clave;
-        let usuario = await usuarioDAO.obtenerUsuarioPorNombreUsuario(nomUsuario);
-        
-        if (usuario?.length===0) {
-            res.json({
-                flag: false,
-                msg: "Usuario no existe"
-            })    
-            return "";
-        }
-        
-        if (usuario[0].clave != clave) {
-            res.json({
-                flag: false,
-                msg: "Clave incorrecta"
-            })    
-            return "";
-        }
-
-        res.json({
-            flag: true,
-            msg: "Credenciales correctas",
-        })
-    }
-    catch(e){
-        console.log(e);
-        res.json({
-            flag: true,
-            msg: "Ha ocurrido un error inesperado"
-        })
-    }
-    
-});
 usuarioRutas.post('/usuario', async (req: Request, res: Response) => {
 
     try{

@@ -22,7 +22,7 @@ export class ListaUsuariosComponent implements OnInit {
 
   inicializarListaUsuarios() {
     for (let i = 0; i < 100; i++) {
-      this.listUsuario.push({ codUsuario: i, nombres: `Jonathan Ruge ${i}`, nomUsuario: `Ruge210${i}`, email: `email${i}@gmail.com`, idSocket: `Socket${i}`, telefono: `304533${i}`, contrasenia: `hola${i}` })
+      this.listUsuario.push({  nombres: `Jonathan Ruge ${i}`, nomUsuario: `Ruge210${i}`, email: `email${i}@gmail.com`, telefono: `304533${i}`, clave: `hola${i}` })
     }
   }
 

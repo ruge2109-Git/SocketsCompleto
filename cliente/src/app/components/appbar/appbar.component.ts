@@ -7,9 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppbarComponent implements OnInit {
 
+  public mostrarMenu:boolean= false;
+
   constructor() { }
 
   ngOnInit(): void {
+    if (localStorage.getItem("sesionUsuario")!=null) {
+      this.mostrarMenu = true;
+    }
   }
 
 }

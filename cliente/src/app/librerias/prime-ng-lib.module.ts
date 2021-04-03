@@ -11,6 +11,7 @@ import {TableModule} from 'primeng/table';
 import {TooltipModule} from 'primeng/tooltip';
 import {ToastModule} from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import {RippleModule} from 'primeng/ripple';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { MessageService } from 'primeng/api';
     SidebarModule,
     TableModule,
     TooltipModule,
-    ToastModule
+    ToastModule,
+    RippleModule
   ],
   exports: [
     ToolbarModule,
@@ -38,7 +40,8 @@ import { MessageService } from 'primeng/api';
     SidebarModule,
     TableModule,
     TooltipModule,
-    ToastModule
+    ToastModule,
+    RippleModule
   ],
   providers: [
     MessageService,

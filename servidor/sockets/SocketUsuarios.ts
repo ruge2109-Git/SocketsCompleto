@@ -1,7 +1,9 @@
+import { ChatGeneralDAO } from "../logica/ChatGeneralDAO";
 import { UsuarioDAO } from "../logica/UsuarioDAO";
 import { UsuarioDTO } from "../modelo/Usuario";
 
 export const usuarioDAO = new UsuarioDAO();
+export const chatGeneralDAO = new ChatGeneralDAO();
 
 
 export const conectarUsuario = (cliente: any, io: any) => {
@@ -9,15 +11,22 @@ export const conectarUsuario = (cliente: any, io: any) => {
     usuarioDAO.conectarUsuario(usuario);
 }
 
+export const desconectarUsuario = (cliente:any,io:any)=>{
+    cliente.on("disconnect", () => {
+        usuarioDAO.desconectarUsuario(cliente.id);
+        io.emit("usuarios-activos", usuarioDAO.obtenerUsuariosActivos());
+    })
+}
+
 export const actualizarUsuario = (cliente: any, io: any) => {
-    cliente.on("actualizar-usuario", (payload: any, callback: Function) => {
-        usuarioDAO.actualizarUsuarios(payload.usuario);
+    cliente.on("actualizar-usuario-socket", (payload: any) => {
+        usuarioDAO.actualizarUsuarios(payload,cliente.id);
+        io.emit("usuarios-activos", usuarioDAO.obtenerUsuariosActivos());
     })
 }
 
 export const obtenerUsuariosActivos = (cliente: any, io: any) => {
     cliente.on("obtener-usuarios-activos", () => {
-        usuarioDAO.obtenerUsuariosActivos();
         io.to(cliente.id).emit("usuarios-activos", usuarioDAO.obtenerUsuariosActivos());
     })
 }
@@ -47,6 +56,17 @@ export const iniciarSesion =  (cliente:any,io:any)=>{
         callback({
             flag: true,
             msg: "Credenciales correctas",
+            listUsuario:usuario[0]
         })
+    })
+}
+
+export const enviarMensaje = (cliente: any, io: any) => {
+    cliente.on("mensaje", (payload: any) => {
+        if (payload.general) {
+            let chatGeneral = {nomUsuario:payload.nomUsuario,mensaje:payload.mensaje};
+            chatGeneralDAO.agregarMensaje(chatGeneral);
+        }
+        io.emit('mensaje-nuevo', payload);
     })
 }

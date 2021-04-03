@@ -1,3 +1,4 @@
+import { UsuarioGuardService } from './../../guards/UsuarioGuard';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
@@ -7,9 +8,9 @@ import { ListaUsuariosComponent } from './lista-usuarios/lista-usuarios.componen
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
-  { path: 'chat', component: ChatUsuariosComponent },
-  { path: 'formulario/:id', component: FormUsuarioComponent },
-  { path: 'lista-usuarios', component: ListaUsuariosComponent }
+  { path: 'chat', component: ChatUsuariosComponent , canActivate:[UsuarioGuardService]},
+  { path: 'formulario/:id', component: FormUsuarioComponent,canActivate:[UsuarioGuardService] },
+  { path: 'lista-usuarios', component: ListaUsuariosComponent,canActivate:[UsuarioGuardService] }
 ];
 
 @NgModule({

@@ -26,23 +26,47 @@ export class UsuarioDAO {
         }
     }
 
-    conectarUsuario(usuario:UsuarioDTO){
-        this.listaActivos.push(usuario);
-        return usuario;
+    conectarUsuario(usuarioNuevo:UsuarioDTO){
+        let usuarioExiste = false;
+        this.listaActivos.forEach(usuario => {
+            if (usuario.idSocket === usuarioNuevo.idSocket) {
+                usuarioExiste = true;
+            }
+        });
+
+        if (!usuarioExiste) {
+            this.listaActivos.push(usuarioNuevo);
+        }
+        return usuarioNuevo;
     }
 
-    actualizarUsuarios(usuarioNuevo: UsuarioDTO) {
-        // this.lista.filter(usuario=>{
-        //     if(usuario.idSocket === usuarioNuevo.idSocket){
-        //         usuario = usuarioNuevo;
-        //     }
-        // })
+    desconectarUsuario(idSocket:any){
+        this.listaActivos = this.listaActivos.filter(user=>{
+            return idSocket!= user.idSocket;
+        });
+        return this.listaActivos;
+    }
+
+    actualizarUsuarios(usuarioNuevo: UsuarioDTO,idSocket:string) {
+        
+        this.listaActivos.filter(usuario=>{
+            if(usuario.idSocket === idSocket){
+                usuario.identificacion = usuarioNuevo.identificacion;
+                usuario.nombres = usuarioNuevo.nombres;
+                usuario.nomUsuario = usuarioNuevo.nomUsuario;
+                usuario.email = usuarioNuevo.email;
+                usuario.telefono = usuarioNuevo.telefono;
+                usuario.nomUsuario = usuarioNuevo.nomUsuario;
+                usuario.clave = usuarioNuevo.clave;
+            }
+        })
+        return usuarioNuevo;
     }
 
     async obtenerTodosLosUsuarios(){
         try {
-            const productos = await usuarioBD.find();
-            return productos;
+            const usuarios = await usuarioBD.find();
+            return usuarios;
         } 
         catch (error) {
             console.log(error);    
@@ -61,7 +85,12 @@ export class UsuarioDAO {
     }
 
     obtenerUsuariosActivos() {
-        return this.listaActivos;
+        return this.listaActivos.filter(usuario=>{
+            return usuario.nomUsuario!='' && usuario.nomUsuario!=null;
+        });        
+        // console.log(this.listaActivos);
+        
+        // return this.listaActivos; 
     }
 
 }
