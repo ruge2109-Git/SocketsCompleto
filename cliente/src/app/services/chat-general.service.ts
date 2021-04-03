@@ -12,7 +12,8 @@ export class ChatGeneralService {
     let payload = {
       nomUsuario:this.wsSocket.obtenerUsuario().nomUsuario,
       mensaje:mensaje,
-      general:general
+      general:general,
+      nombres:this.wsSocket.obtenerUsuario().nombres
     };
     this.wsSocket.emitir('mensaje',payload);
   }

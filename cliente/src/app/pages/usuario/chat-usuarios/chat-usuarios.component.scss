@@ -13,6 +13,20 @@
   color: blue;
 }
 
+.lineaDivisora{
+  margin: 0%;
+}
+
+.nomUsuario{
+  margin: 0%;
+  padding: 4%;
+}
+
+.nomUsuario:hover{
+  cursor: pointer;
+  background: #fcfbfc;
+}
+
 :host ::ng-deep {
   .card {
     height: 400px;

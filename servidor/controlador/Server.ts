@@ -4,6 +4,7 @@ import http from 'http';
 import { SERVER_PORT } from "../environments/environment";
 import * as socketUsuarios from '../sockets/SocketUsuarios';
 import * as socketChatGeneral from '../sockets/SocketChatGeneral';
+import * as socketChatPrivado from '../sockets/SocketChatPrivado';
 
 export default class Server {
 
@@ -38,11 +39,13 @@ export default class Server {
             socketUsuarios.iniciarSesion(cliente,this.io);
             socketUsuarios.desconectarUsuario(cliente,this.io);
             socketUsuarios.actualizarUsuario(cliente,this.io); 
-            socketUsuarios.enviarMensaje(cliente,this.io);
             socketUsuarios.obtenerUsuariosActivos(cliente,this.io);
-
             //Sockets para el chat general
+            socketChatGeneral.enviarMensaje(cliente,this.io);
             socketChatGeneral.obtenerMensajesGenerales(cliente,this.io);
+            //Sockets para el chat privado
+            socketChatPrivado.enviarMensaje(cliente,this.io);
+            socketChatPrivado.obtenerMensajesPrivados(cliente,this.io);
         });
     }
 
