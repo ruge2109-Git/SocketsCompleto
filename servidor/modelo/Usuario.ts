@@ -2,7 +2,6 @@ import { model, Schema, Model, Document } from 'mongoose';
 
 export class UsuarioDTO {
     idSocket: string;
-    identificacion: number;
     nombres: string;
     email: string;
     telefono: string;
@@ -11,7 +10,6 @@ export class UsuarioDTO {
 
     constructor(idSocket: string) {
         this.idSocket = idSocket;
-        this.identificacion= 0;
         this.nombres= "";
         this.email= "";
         this.telefono= "";
@@ -21,7 +19,6 @@ export class UsuarioDTO {
 };
 
 export interface UsuarioDTOBD extends Document {
-    identificacion:string;
     nombres: string;
     email: string;
     telefono: string;
@@ -30,7 +27,6 @@ export interface UsuarioDTOBD extends Document {
 };
 
 const usuarioSchema: Schema = new Schema({
-    identificacion: { type: String, required: true },
     nombres: { type: String, required: true },
     email: { type: String, required: true },
     telefono: { type: String, required: true },

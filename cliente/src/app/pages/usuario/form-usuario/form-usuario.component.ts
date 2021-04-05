@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { UsuarioDTO } from 'src/app/models/Usuario';
+import { UsuariosService } from 'src/app/services/usuarios.service';
+import { ToastrService } from 'ngx-toastr';
+import { RespuestaSocket } from 'src/app/models/RespuestaSocket';
 
 @Component({
   selector: 'app-form-usuario',
@@ -8,26 +13,53 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class FormUsuarioComponent implements OnInit {
 
-  public frmDatos:FormGroup;
+  public frmDatos: FormGroup;
+  public usuario: UsuarioDTO;
+  public nomUsuario: string;
+  public spiner: boolean;
 
-  constructor() { }
+  constructor(private route: ActivatedRoute, private usuarioSer: UsuariosService, private toastr: ToastrService,private router:Router) {
+    this.nomUsuario = route.snapshot.params.id;
+    if (this.nomUsuario != "0") {
+      this.obtenerInformacionUsuario();
+    }
+  }
 
   ngOnInit(): void {
+    this.usuario = new UsuarioDTO();
+    this.usuario.nombres = "";
+    this.usuario.email = "";
+    this.usuario.telefono = "";
+    this.usuario.nomUsuario = "";
+    this.usuario.clave = "";
     this.frmDatos = this.newFormGroup();
   }
 
-  guardarInformacion(){
-    console.log(this.frmDatos.value);
+  guardarInformacion() {
+    this.spiner = true;
+    this.usuarioSer.crearUsuario(this.frmDatos.value).then((res:RespuestaSocket) => {
+      this.spiner = false;
+      if (res.flag) {
+        this.toastr.success(res.msg,'Correcto');
+        this.router.navigateByUrl('usuarios/lista-usuarios')
+      }
+      else{
+        this.toastr.error(res.msg,'Error');
+      }
+    })
+    // console.log(this.frmDatos.value);
+  }
 
+  obtenerInformacionUsuario() {
   }
 
   newFormGroup() {
     return new FormGroup({
-      nombres: new FormControl("", [Validators.required]),
-      email: new FormControl("", [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
-      telefono: new FormControl("", [Validators.required]),
-      nomUsuario: new FormControl("", [Validators.required]),
-      clave: new FormControl("", [Validators.required])
+      nombres: new FormControl(this.usuario.nombres, [Validators.required]),
+      email: new FormControl(this.usuario.email, [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
+      telefono: new FormControl(this.usuario.telefono, [Validators.required]),
+      nomUsuario: new FormControl(this.usuario.nomUsuario, [Validators.required]),
+      clave: new FormControl(this.usuario.clave, [Validators.required])
     });
   }
 

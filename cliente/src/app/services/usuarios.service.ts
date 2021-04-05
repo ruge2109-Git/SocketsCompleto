@@ -38,5 +38,13 @@ export class UsuariosService {
     this.router.navigateByUrl("/");
   }
 
+  crearUsuario(usuario:string){
+    return new Promise((resolve,reject)=>{
+      this.wsSocket.emitir("crear-usuario-bd",usuario,(res)=>{
+        resolve(res);
+      })
+    })
+  }
+
 
 }

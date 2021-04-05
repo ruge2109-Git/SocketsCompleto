@@ -29,6 +29,29 @@ export const obtenerUsuariosActivos = (cliente: any, io: any) => {
     })
 }
 
+export const crearUsuario = (cliente:any, io:any) =>{
+    cliente.on("crear-usuario-bd", async (payload:any,callback:Function)=>{
+        
+        let usuario = await usuarioDAO.obtenerUsuarioPorNombreUsuario(payload.nomUsuario);
+        if (usuario?.length!=0) {
+            callback({
+                flag: false,
+                msg: "Ya existe un usuario con ese nombre de usuario"
+            })    
+            return "";
+        }
+
+        let usuarioNuevo:UsuarioDTO = JSON.parse(JSON.stringify(payload));
+        let agregarUsuario = await usuarioDAO.agregarUsuario(usuarioNuevo);
+  
+        callback({
+            flag: true,
+            msg: "Usuario agregado correctamente",
+            usuario:agregarUsuario
+        })
+    })
+}
+
 export const iniciarSesion =  (cliente:any,io:any)=>{
     cliente.on("iniciar-sesion",async (payload:any,callback:Function)=>{
         const nomUsuario = payload.nomUsuario;

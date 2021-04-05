@@ -11,7 +11,6 @@ export class UsuarioDAO {
     async agregarUsuario(usuario: UsuarioDTO) {
         try {
             const usuarioNuevo: UsuarioDTOBD = await usuarioBD.create({
-                identificacion:usuario.identificacion,
                 nombres: usuario.nombres,
                 email:usuario.email,
                 telefono: usuario.telefono,
@@ -56,7 +55,6 @@ export class UsuarioDAO {
         
         this.listaActivos.filter(usuario=>{
             if(usuario.idSocket === idSocket){
-                usuario.identificacion = usuarioNuevo.identificacion;
                 usuario.nombres = usuarioNuevo.nombres;
                 usuario.nomUsuario = usuarioNuevo.nomUsuario;
                 usuario.email = usuarioNuevo.email;
