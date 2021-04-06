@@ -8,7 +8,6 @@ import { MenuLateralComponent } from 'src/app/components//menu-lateral/menu-late
 import { SpinnerComponent } from 'src/app/components/spinner/spinner.component';
 
 
-
 @NgModule({
   declarations: [
     AppbarComponent,

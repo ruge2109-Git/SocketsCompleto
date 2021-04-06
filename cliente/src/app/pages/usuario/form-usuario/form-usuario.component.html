@@ -1,5 +1,5 @@
 <app-appbar></app-appbar>
-
+<app-spinner *ngIf="spiner"></app-spinner>
 <div class="contenedor">
   <h2 class="p-text-center">Información usuario</h2>
   <form [formGroup]="frmDatos" (ngSubmit)="guardarInformacion()">

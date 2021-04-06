@@ -8,8 +8,8 @@
       <div class="p-shadow-1 card">
         <ul class="listaUsuarios">
           <li class="itemLista" *ngFor="let usuario of usuariosActivosObs | async">
-            <h4 (click)="seleccionarUsuario(usuario)" class="nomUsuario">{{usuario.nombres}}</h4>
-            <hr class="lineaDivisora">
+            <h4 *ngIf="usuario.nomUsuario != usuarioSocket.wsSocket.obtenerUsuario().nomUsuario" (click)="seleccionarUsuario(usuario)" class="nomUsuario">{{usuario.nombres}}</h4>
+            <hr *ngIf="usuario.nomUsuario != usuarioSocket.wsSocket.obtenerUsuario().nomUsuario" class="lineaDivisora">
           </li>
         </ul>
       </div>
@@ -23,34 +23,30 @@
         <h3 *ngIf="usuario.nomUsuario==null">Conversación general</h3>
 
         <div class="p-shadow-1 card" id="chat-mensajes">
-          <!-- <ng-container > -->
-            <ng-container *ngFor="let msm of mensajes">
-              <ng-container *ngIf="mensajeDesdeSesion(msm.nomUsuario)">
-                <div class="p-grid">
-                  <div class="p-col-12 p-lg-10">
-                    <strong class="mensajeLocal">{{msm.nombres}}</strong>:
-                    {{msm.mensaje}}
-                  </div>
-                  <div class="p-col-12 p-lg-2">
-                    <small>{{msm.fechaMensaje | date:'yyyy-MM-dd HH:mm:ss'}}</small>
-                  </div>
+          <ng-container *ngFor="let msm of mensajes">
+            <ng-container *ngIf="mensajeDesdeSesion(msm.nomUsuario)">
+              <div class="p-grid">
+                <div class="p-col-12 p-lg-10">
+                  <strong class="mensajeLocal">{{msm.nombres}}</strong>: {{msm.mensaje}}
                 </div>
-                <hr>
-              </ng-container>
-              <ng-container *ngIf="!mensajeDesdeSesion(msm.nomUsuario)">
-                <div class="p-grid">
-                  <div class="p-col-12 p-lg-10">
-                    <strong>{{msm.nombres}}</strong>:
-                    {{msm.mensaje}}
-                  </div>
-                  <div class="p-col-12 p-lg-2">
-                    <small>{{msm.fechaMensaje | date:'yyyy-MM-dd HH:mm:ss'}}</small>
-                  </div>
+                <div class="p-col-12 p-lg-2">
+                  <small>{{msm.fechaMensaje | date:'yyyy-MM-dd HH:mm:ss'}}</small>
                 </div>
-                <hr>
-              </ng-container>
+              </div>
+              <hr>
             </ng-container>
-          <!-- </ng-container> -->
+            <ng-container *ngIf="!mensajeDesdeSesion(msm.nomUsuario)">
+              <div class="p-grid">
+                <div class="p-col-12 p-lg-10">
+                  <strong>{{msm.nombres}}</strong>: {{msm.mensaje}}
+                </div>
+                <div class="p-col-12 p-lg-2">
+                  <small>{{msm.fechaMensaje | date:'yyyy-MM-dd HH:mm:ss'}}</small>
+                </div>
+              </div>
+              <hr>
+            </ng-container>
+          </ng-container>
         </div>
 
 
