@@ -23,7 +23,7 @@ export class ChatUsuariosComponent implements OnInit, OnDestroy {
   public usuario: UsuarioDTO;
   public chatPrivado: boolean;
 
-  constructor(private usuarioSocket: UsuariosService, private chatGeneralService: ChatGeneralService, private chatPrivadoService: ChatPrivadoService) { }
+  constructor(public usuarioSocket: UsuariosService, private chatGeneralService: ChatGeneralService, private chatPrivadoService: ChatPrivadoService) { }
 
   ngOnInit(): void {
     this.element = document.getElementById("chat-mensajes");
@@ -49,18 +49,7 @@ export class ChatUsuariosComponent implements OnInit, OnDestroy {
     this.mensajesSubPrimeraVez = this.chatGeneralService.obtenerMensajesCompletosPrimeraVez().subscribe(
       (data: ChatGeneralDTO[]) => {
         if (data != null) {
-
-          data.forEach(msm => {
-            this.mensajes.forEach(mensaje => {
-              if (msm._id === mensaje._id) {
-                msm.yaExiste = true;
-              }
-            });
-            if (!msm.yaExiste ) {
-              this.mensajes.push(msm);
-            }
-
-          });
+          this.mensajes = data;
         }
         setTimeout(() => {
           if (this.element != null) {
@@ -85,6 +74,7 @@ export class ChatUsuariosComponent implements OnInit, OnDestroy {
             this.element.scrollTop = this.element.scrollHeight;
           }
         }, 50);
+        console.log(this.mensajes);
       }
     )
   }
@@ -108,9 +98,7 @@ export class ChatUsuariosComponent implements OnInit, OnDestroy {
   }
 
   seleccionarUsuario(usuarioS: UsuarioDTO) {
-    let usuario: UsuarioDTO;
-    usuario = JSON.parse(atob(localStorage.getItem("sesionUsuario")));
-    if (usuarioS.nomUsuario != usuario.nomUsuario) {
+    if (usuarioS.nomUsuario != this.usuarioSocket.wsSocket.obtenerUsuario().nomUsuario) {
       this.usuario = usuarioS;
       this.chatPrivado = true;
       this.mensajes = [];
@@ -134,7 +122,6 @@ export class ChatUsuariosComponent implements OnInit, OnDestroy {
     this.mensajesSubPrimeraVez = this.chatPrivadoService.obtenerMensajesCompletosPrimeraVez().subscribe(
       (data: ChatPrivadoDTO[]) => {
         if (data != null) {
-          console.log(data);
           data.forEach(msm => {
             this.mensajes.forEach(mensaje => {
               if (msm._id === mensaje._id) {
@@ -146,7 +133,8 @@ export class ChatUsuariosComponent implements OnInit, OnDestroy {
             let condicion2 = msm.nomUsuarioReceptor == this.usuario.nomUsuario || msm.nomUsuarioReceptor == this.usuarioSocket.wsSocket.obtenerUsuario().nomUsuario;
             let condicion3 = msm.nomUsuario == this.usuario.nomUsuario || msm.nomUsuario == this.usuarioSocket.wsSocket.obtenerUsuario().nomUsuario;
 
-            if (!msm.yaExiste && condicion1 && condicion2 && condicion3) {
+
+            if (!msm.yaExiste && condicion1 && condicion2 && condicion3 && this.chatPrivado) {
               this.mensajes.push(msm);
             }
 
@@ -167,7 +155,7 @@ export class ChatUsuariosComponent implements OnInit, OnDestroy {
             data.yaExiste = true;
           }
         });
-        if (!data.yaExiste) {
+        if (!data.yaExiste && this.chatPrivado) {
           this.mensajes.push(data);
         }
         setTimeout(() => {

@@ -1,4 +1,4 @@
-import { DB_PASS, DB_USER } from './../environments/environment';
+import { DB_NAME, DB_PASS, DB_USER } from './../environments/environment';
 import mongoose from "mongoose";
 
 export default class ConexionDB {
@@ -13,14 +13,17 @@ export default class ConexionDB {
         this.conectarBD();
     }
 
-    public conectarBD() {
+    async conectarBD() {
         try {
-            mongoose.connect(`mongodb+srv://${DB_USER}:${DB_PASS}@cluster0.91y4m.mongodb.net/sockets`, {
-                useNewUrlParser: true,
-                useUnifiedTopology: true,
-                useFindAndModify: false
+            const urlBD = `mongodb+srv://${DB_USER}:${DB_PASS}@cluster0.91y4m.mongodb.net/${DB_NAME}`;
+            await mongoose.connect(urlBD, {
+                useNewUrlParser: true, 
+                useUnifiedTopology: true, 
+                useFindAndModify: false, 
+                useCreateIndex: true 
             });
-            console.log("Conexión con la BD");
+            console.log("Conexión realizada");
+            
             
         } catch (error) {
             console.log(error);

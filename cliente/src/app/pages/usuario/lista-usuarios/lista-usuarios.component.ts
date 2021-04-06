@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
+import { ConfirmationService } from 'primeng/api';
+import { Subscription } from 'rxjs';
+import { RespuestaSocket } from 'src/app/models/RespuestaSocket';
+import { UsuariosService } from 'src/app/services/usuarios.service';
 import { UsuarioDTO } from './../../../models/Usuario';
 
 @Component({
@@ -6,28 +11,59 @@ import { UsuarioDTO } from './../../../models/Usuario';
   templateUrl: './lista-usuarios.component.html',
   styleUrls: ['./lista-usuarios.component.scss']
 })
-export class ListaUsuariosComponent implements OnInit {
+export class ListaUsuariosComponent implements OnInit, OnDestroy {
 
   public listUsuario: UsuarioDTO[] = [];
   public usuariosSeleccionados: UsuarioDTO[];
   public columnas: any[];
   public exportarColumnasTabla: any[];
+  public usuariosBDObs: Subscription;
+  public spinner: boolean;
 
-  constructor() { }
+  constructor(private usuarioService: UsuariosService, private toastr: ToastrService, private confirmationService: ConfirmationService) { }
 
   ngOnInit(): void {
-    this.inicializarListaUsuarios();
     this.inicializarColumnas();
+    this.obtenerUsuarios();
   }
 
-  inicializarListaUsuarios() {
-    for (let i = 0; i < 100; i++) {
-      this.listUsuario.push({  nombres: `Jonathan Ruge ${i}`, nomUsuario: `Ruge210${i}`, email: `email${i}@gmail.com`, telefono: `304533${i}`, clave: `hola${i}` })
-    }
+  ngOnDestroy(): void {
+    if (this.usuariosBDObs != null) { this.usuariosBDObs.unsubscribe() };
   }
 
   eliminarUsuario(usuario: UsuarioDTO) {
+    this.confirmationService.confirm({
+      target: event.target,
+      message: `¿Está seguro de querer eliminar el usuario ${usuario.nomUsuario}?`,
+      icon: 'pi pi-exclamation-triangle',
+      acceptLabel: 'Si',
+      rejectLabel: 'No',
+      accept: () => {
+        this.spinner = true;
+        this.usuarioService.eliminarUsuarioPorID(usuario).then((data: RespuestaSocket) => {
+          this.spinner = false;
+          if (data.flag) {
+            this.toastr.success(data.msg, 'Correcto');
+          }
+          else {
+            this.toastr.error(data.msg, 'Error');
+          }
+        })
+      },
+      reject: () => {
+        this.toastr.error("NO", 'Error');
+      }
+    });
 
+  }
+
+  obtenerUsuarios() {
+    this.spinner = true;
+    this.usuarioService.llamarUsuariosBD();
+    this.usuariosBDObs = this.usuarioService.obtenerUsuariosBD().subscribe((data: UsuarioDTO[]) => {
+      this.spinner = false;
+      this.listUsuario = data;
+    })
   }
 
   inicializarColumnas() {
@@ -50,10 +86,10 @@ export class ListaUsuariosComponent implements OnInit {
       let dataExportar = [];
       this.listUsuario.forEach(usuario => {
         dataExportar.push({
-          nombres:usuario.nombres,
-          email:usuario.email,
-          usuario:usuario.nomUsuario,
-          telefono:usuario.telefono,
+          nombres: usuario.nombres,
+          email: usuario.email,
+          usuario: usuario.nomUsuario,
+          telefono: usuario.telefono,
         })
       });
 

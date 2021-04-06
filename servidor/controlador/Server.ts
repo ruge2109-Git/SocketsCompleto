@@ -41,6 +41,10 @@ export default class Server {
             socketUsuarios.actualizarUsuario(cliente,this.io); 
             socketUsuarios.obtenerUsuariosActivos(cliente,this.io);
             socketUsuarios.crearUsuario(cliente,this.io);
+            socketUsuarios.obtenerUsuariosBD(cliente,this.io);
+            socketUsuarios.obtenerUsuarioBDPorIdsuario(cliente,this.io);
+            socketUsuarios.modificarUsuarioBD(cliente,this.io);
+            socketUsuarios.eliminarUsuarioBD(cliente,this.io);
             //Sockets para el chat general
             socketChatGeneral.enviarMensaje(cliente,this.io);
             socketChatGeneral.obtenerMensajesGenerales(cliente,this.io);

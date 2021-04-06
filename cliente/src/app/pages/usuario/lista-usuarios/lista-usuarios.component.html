@@ -1,5 +1,5 @@
 <app-appbar></app-appbar>
-
+<app-spinner *ngIf="spinner"></app-spinner>
 <div class="contenedor">
   <p-card>
     <p-toolbar styleClass="p-mb-4">
@@ -61,7 +61,8 @@
           <td>{{usuario.telefono}}</td>
           <td>{{usuario.nomUsuario}}</td>
           <td>
-            <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" [routerLink]="'/usuarios/formulario/'+usuario.codUsuario"></button>
+            <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" [routerLink]="'/usuarios/formulario/'+usuario._id"></button>
+            <p-confirmPopup></p-confirmPopup>
             <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="eliminarUsuario(usuario)"></button>
           </td>
         </tr>

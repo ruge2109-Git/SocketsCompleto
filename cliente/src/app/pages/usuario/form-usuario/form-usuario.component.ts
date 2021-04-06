@@ -18,7 +18,7 @@ export class FormUsuarioComponent implements OnInit {
   public nomUsuario: string;
   public spiner: boolean;
 
-  constructor(private route: ActivatedRoute, private usuarioSer: UsuariosService, private toastr: ToastrService,private router:Router) {
+  constructor(private route: ActivatedRoute, private usuarioSer: UsuariosService, private toastr: ToastrService, private router: Router) {
     this.nomUsuario = route.snapshot.params.id;
     if (this.nomUsuario != "0") {
       this.obtenerInformacionUsuario();
@@ -36,21 +36,50 @@ export class FormUsuarioComponent implements OnInit {
   }
 
   guardarInformacion() {
-    this.spiner = true;
-    this.usuarioSer.crearUsuario(this.frmDatos.value).then((res:RespuestaSocket) => {
-      this.spiner = false;
-      if (res.flag) {
-        this.toastr.success(res.msg,'Correcto');
-        this.router.navigateByUrl('usuarios/lista-usuarios')
-      }
-      else{
-        this.toastr.error(res.msg,'Error');
-      }
-    })
+
+    if (this.nomUsuario!="0") {
+      this.spiner = true;
+      this.usuarioSer.modificarUsuarioBD(this.parsearUsuario()).then((res: RespuestaSocket) => {
+        console.log(res);
+        this.spiner = false;
+        if (res.flag) {
+          this.toastr.success(res.msg, 'Correcto');
+          this.router.navigateByUrl('usuarios/lista-usuarios')
+        }
+        else {
+          this.toastr.error(res.msg, 'Error');
+        }
+      })
+    }
+    else{
+      this.spiner = true;
+      this.usuarioSer.crearUsuario(this.frmDatos.value).then((res: RespuestaSocket) => {
+        this.spiner = false;
+        if (res.flag) {
+          this.toastr.success(res.msg, 'Correcto');
+          this.router.navigateByUrl('usuarios/lista-usuarios')
+        }
+        else {
+          this.toastr.error(res.msg, 'Error');
+        }
+      })
+    }
+
     // console.log(this.frmDatos.value);
   }
 
   obtenerInformacionUsuario() {
+    this.spiner = true;
+    this.usuarioSer.obtenerUsuarioBDPorNomID(this.nomUsuario).then((data: RespuestaSocket) => {
+      if (data.flag) {
+        this.usuario = data.listUsuario;
+        this.frmDatos = this.newFormGroup();
+      }
+      else {
+        this.toastr.error(data.msg, 'Error');
+      }
+      this.spiner = false;
+    })
   }
 
   newFormGroup() {
@@ -72,6 +101,15 @@ export class FormUsuarioComponent implements OnInit {
 
   obtenerPropiedadFormGroup(xPropiedad) {
     return this.frmDatos.get(xPropiedad)
+  }
+
+  parsearUsuario(){
+    this.usuario.nombres = this.obtenerPropiedadFormGroup("nombres").value;
+    this.usuario.email = this.obtenerPropiedadFormGroup("email").value;
+    this.usuario.telefono = this.obtenerPropiedadFormGroup("telefono").value;
+    this.usuario.nomUsuario = this.obtenerPropiedadFormGroup("nomUsuario").value;
+    this.usuario.clave = this.obtenerPropiedadFormGroup("clave").value;
+    return this.usuario;
   }
 
 }
