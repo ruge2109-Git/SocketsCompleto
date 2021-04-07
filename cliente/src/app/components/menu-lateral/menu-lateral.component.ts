@@ -28,6 +28,11 @@ export class MenuLateralComponent implements OnInit {
         ]
       },
       {
+        label:'Datos',
+        icon:'pi pi-fw pi-chart-bar',
+        routerLink:'/graficas'
+      },
+      {
         label: 'Cerrar sesión',
         icon: 'pi pi-fw pi-sign-out',
         command: (event) => {
