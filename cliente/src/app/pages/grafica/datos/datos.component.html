@@ -1,10 +1,33 @@
 <app-appbar></app-appbar>
 <div class="contenedor">
-
-  <p-card>
-    <div class="boxGrafica">
-      <canvas baseChart  [options]="lineChartOptions" [datasets]="lineChartData" [labels]="lineChartLabels" [legend]="lineChartLegend" [chartType]="lineChartType"></canvas>
+  <h2>Gráfica en tiempo real</h2>
+  <div class="p-grid">
+    <div class="p-lg-6 p-col-12">
+      <p-card>
+        <div class="boxGrafica">
+          <canvas baseChart  [options]="lineChartOptions" [datasets]="lineChartData" [labels]="lineChartLabels" [legend]="lineChartLegend" [chartType]="lineChartType"></canvas>
+        </div>
+      </p-card>
     </div>
-  </p-card>
+    <div class="p-lg-6 p-col-12">
+      <form [formGroup]="frmDatos" (ngSubmit)="sumarGrafica()">
+        <h3>Incrementar valores</h3>
+        <div class="p-fluid p-formgrid">
+          <div class="p-field">
+            <label for="valor">Mes</label>
+            <p-dropdown [options]="dataGrafica" formControlName="mes" optionLabel="mes"></p-dropdown>
+            <small class="p-error" *ngIf="condicionInvalid('mes') || obtenerPropiedadFormGroup('mes').value.mes == 'Seleccione' " >El mes es obligatorio.</small>
+          </div>
+          <div class="p-field">
+            <label for="valor">Valor</label>
+            <input id="valor" formControlName="valor" type="number" pInputText placeholder="valor" [class.ng-dirty]="condicionInvalid('valor')" >
+            <small class="p-error" *ngIf="condicionInvalid('valor')">El valor mínimo es de 1.</small>
+          </div>
+        </div>
+        <button pButton type="submit" label="Guardar" [disabled]="frmDatos.invalid || obtenerPropiedadFormGroup('mes').value.mes == 'Seleccione'"></button>
+      </form>
+    </div>
+  </div>
+
 </div>
 <app-footer></app-footer>

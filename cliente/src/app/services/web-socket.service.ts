@@ -24,11 +24,9 @@ export class WebSocketService {
   checkStatus() {
 
     this.socket.on('connect', () => {
-      console.log('Conectado al servidor');
     });
 
     this.socket.on('disconnect', () => {
-      console.log('Desconectado del servidor');
     });
   }
 
