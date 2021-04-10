@@ -14,6 +14,7 @@ import { MessageService } from 'primeng/api';
 import {RippleModule} from 'primeng/ripple';
 import {ConfirmPopupModule} from 'primeng/confirmpopup';
 import {ConfirmationService} from 'primeng/api';
+import {DropdownModule} from 'primeng/dropdown';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import {ConfirmationService} from 'primeng/api';
     TooltipModule,
     ToastModule,
     RippleModule,
-    ConfirmPopupModule
+    ConfirmPopupModule,
+    DropdownModule
   ],
   exports: [
     ToolbarModule,
@@ -45,7 +47,8 @@ import {ConfirmationService} from 'primeng/api';
     TooltipModule,
     ToastModule,
     RippleModule,
-    ConfirmPopupModule
+    ConfirmPopupModule,
+    DropdownModule
   ],
   providers: [
     MessageService,

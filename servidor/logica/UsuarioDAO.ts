@@ -1,5 +1,4 @@
 import { UsuarioDTO, usuarioBD, UsuarioDTOBD } from "../modelo/Usuario";
-import { ObjectID } from 'mongodb';
 export class UsuarioDAO {
 
     private static _instance: UsuarioDAO;

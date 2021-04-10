@@ -6,7 +6,7 @@ import { FooterComponent } from 'src/app/components//footer/footer.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MenuLateralComponent } from 'src/app/components//menu-lateral/menu-lateral.component';
 import { SpinnerComponent } from 'src/app/components/spinner/spinner.component';
-
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -19,7 +19,8 @@ import { SpinnerComponent } from 'src/app/components/spinner/spinner.component';
     CommonModule,
     PrimeNgLibModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ChartsModule,
   ],
   exports: [
     AppbarComponent,
@@ -27,7 +28,8 @@ import { SpinnerComponent } from 'src/app/components/spinner/spinner.component';
     FormsModule,
     SpinnerComponent,
     ReactiveFormsModule,
-    MenuLateralComponent
+    MenuLateralComponent,
+    ChartsModule,
   ]
 })
 export class ComponentesModule { }
