@@ -33,6 +33,11 @@ export class MenuLateralComponent implements OnInit {
         routerLink:'/graficas'
       },
       {
+        label:'Mapas',
+        icon:'pi pi-fw pi-map',
+        routerLink:'/graficas/mapas'
+      },
+      {
         label: 'Cerrar sesión',
         icon: 'pi pi-fw pi-sign-out',
         command: (event) => {
