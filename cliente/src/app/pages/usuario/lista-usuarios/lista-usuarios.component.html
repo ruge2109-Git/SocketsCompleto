@@ -1,5 +1,6 @@
 <app-appbar></app-appbar>
-<app-spinner *ngIf="spinner"></app-spinner>
+<!-- <app-spinner *ngIf="spinner"></app-spinner> -->
+
 <div class="contenedor">
   <p-card>
     <p-toolbar styleClass="p-mb-4">
@@ -17,16 +18,21 @@
       </ng-template>
     </p-toolbar>
 
-    <p-table #dt [value]="listUsuario" [columns]="columnas"[rows]="5" [paginator]="true" [globalFilterFields]="['nombres','email','telefono','nomUsuario']" [(selection)]="usuariosSeleccionados" [rowHover]="true" dataKey="nomUsuario" currentPageReportTemplate="Mostando {first} de {last} de {totalRecords} registros"
-      [showCurrentPageReport]="true">
+    <p-table #dt [value]="listUsuario" styleClass="p-datatable-customers" [columns]="columnas" [rows]="5" [paginator]="true" [globalFilterFields]="['nombres','email','telefono','nomUsuario']" [(selection)]="usuariosSeleccionados" [loading]="spinner" [rowHover]="true"
+      dataKey="nomUsuario" currentPageReportTemplate="Mostando {first} de {last} de {totalRecords} registros" [showCurrentPageReport]="true">
 
       <ng-template pTemplate="caption">
-        <div class="p-d-flex p-ai-center p-jc-between">
-          <h2 class="p-m-0">Lista de usuarios</h2>
-          <span class="p-input-icon-left">
-            <i class="pi pi-search"></i>
-            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Buscar..." />
-          </span>
+        <div class="p-grid">
+          <div class="p-md-6">
+            <h2 class="p-m-0">Lista de usuarios</h2>
+          </div>
+          <div class="p-md-2 p-md-offset-3">
+            <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Buscar..." />
+              </span>
+          </div>
+
         </div>
       </ng-template>
 

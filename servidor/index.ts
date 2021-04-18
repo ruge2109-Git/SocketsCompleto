@@ -3,6 +3,7 @@ import Server from './controlador/Server';
 import usuarioRutas from './rutas/UsuarioRutas';
 import express from "express";
 import graficaRutas from './rutas/GraficaRuta';
+import mapaRutas from './rutas/MapaRutas';
 import cors from 'cors';
 
 const conn = ConexionDB.obtenerInstancia;
@@ -13,6 +14,7 @@ server.app.use(express.json());
 server.app.use(cors({origin:true,credentials:true}));
 server.app.use("/",usuarioRutas);
 server.app.use("/",graficaRutas);
+server.app.use("/",mapaRutas);
 
 server.iniciarServidor(()=>{
     console.log("Servidor corriendo");

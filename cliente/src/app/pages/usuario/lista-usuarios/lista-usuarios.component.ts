@@ -27,6 +27,7 @@ export class ListaUsuariosComponent implements OnInit, OnDestroy {
     this.obtenerUsuarios();
   }
 
+
   ngOnDestroy(): void {
     if (this.usuariosBDObs != null) { this.usuariosBDObs.unsubscribe() };
   }
