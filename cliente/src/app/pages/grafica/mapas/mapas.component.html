@@ -2,6 +2,17 @@
 <div class="contenedor">
   <h1>Mapa en tiempo real</h1>
   <hr>
-  <div #boxMapa id="boxMapa"></div>
+  <div class="p-grid">
+    <div class="p-md-8">
+      <div #boxMapa id="boxMapa"></div>
+    </div>
+    <div class="p-md-4">
+      <h3>Opciones en el mapa</h3>
+      <button pButton type="button" label="Agregar marcador" [disabled]="posicionObtenida" (click)="obtenerPosicionInicial()"></button>
+
+    </div>
+
+  </div>
+
 </div>
 <app-footer></app-footer>

@@ -5,6 +5,7 @@ import { SERVER_PORT } from "../environments/environment";
 import * as socketUsuarios from '../sockets/SocketUsuarios';
 import * as socketChatGeneral from '../sockets/SocketChatGeneral';
 import * as socketChatPrivado from '../sockets/SocketChatPrivado';
+import * as socketMapas from '../sockets/SocketMapa';
 
 export default class Server {
 
@@ -51,6 +52,10 @@ export default class Server {
             //Sockets para el chat privado
             socketChatPrivado.enviarMensaje(cliente,this.io);
             socketChatPrivado.obtenerMensajesPrivados(cliente,this.io);
+            //Sockets para los mapas
+            socketMapas.marcadorNuevo(cliente, this.io);
+            socketMapas.eliminarMarcador(cliente,this.io);
+            socketMapas.moverMarcador(cliente,this.io);
         });
     }
 

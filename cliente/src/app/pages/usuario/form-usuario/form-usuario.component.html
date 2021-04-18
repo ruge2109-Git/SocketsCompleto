@@ -5,12 +5,12 @@
   <form [formGroup]="frmDatos" (ngSubmit)="guardarInformacion()">
     <p-card>
       <div class="p-fluid p-formgrid p-grid">
-        <div class="p-field p-col">
+        <div class="p-field p-md-6 p-col-12">
           <label for="nombre">Nombres</label>
           <input id="nombre" formControlName="nombres" type="text" pInputText placeholder="Nombres" [class.ng-dirty]="condicionInvalid('nombres')" >
           <small class="p-error" *ngIf="condicionInvalid('nombres')">Los nombres son obligatorios.</small>
         </div>
-        <div class="p-field p-col">
+        <div class="p-field p-md-6 p-col-12">
           <label for="email">Email</label>
           <input id="email" type="email" formControlName="email" pInputText placeholder="Correo electrónico" [class.ng-dirty]="condicionInvalid('email')" >
           <small class="p-error" *ngIf="condicionInvalid('email')">El email es obligatorio y debe ser de la forma xxxxxxx@xxxxx.xxx</small>
@@ -19,19 +19,19 @@
 
       <div class="p-fluid p-formgrid p-grid">
 
-        <div class="p-field p-col">
+        <div class="p-field p-md-6 p-col-12">
           <label for="telefono">Teléfono</label>
           <input id="telefono" type="text" formControlName="telefono" pInputText placeholder="Teléfono" [class.ng-dirty]="condicionInvalid('telefono')" >
           <small class="p-error" *ngIf="condicionInvalid('telefono')">El teléfono es obligatorios.</small>
         </div>
 
-        <div class="p-field p-col">
+        <div class="p-field p-md-6 p-col-12">
           <label for="clave">Nombre de usuario</label>
           <input id="clave" type="text" formControlName="nomUsuario" pInputText placeholder="Nombre de usuario" [class.ng-dirty]="condicionInvalid('nomUsuario')" >
           <small class="p-error" *ngIf="condicionInvalid('nomUsuario')">El nombre de usuario es obligatorio.</small>
         </div>
 
-        <div class="p-field p-col">
+        <div class="p-field p-md-6 p-col-12">
           <label for="clave">Contraseña</label>
           <p-password [toggleMask]="true" [feedback]="false" id="clave" formControlName="clave"  placeholder="Contraseña" [class.ng-dirty]="condicionInvalid('clave')" ></p-password>
           <small class="p-error" *ngIf="condicionInvalid('clave')">La contraseña es obligatoria.</small>
